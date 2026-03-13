@@ -1,0 +1,93 @@
+import pandas as pd
+from google_play_scraper import reviews
+
+
+def fetch_google_play_reviews(app_id, count=200):
+    result, _ = reviews(
+        app_id,
+        lang='en',
+        country='us',
+        count=count
+    )
+
+    data = []
+
+    for r in result:
+        data.append({
+            "source": "Google Play",
+            "review": r['content'],
+            "rating": r['score']
+        })
+
+    return pd.DataFrame(data)
+
+
+def load_csv_reviews(file_path):
+    df = pd.read_csv(file_path)
+    df["source"] = "Survey"
+    return df
+
+
+from textblob import TextBlob
+
+
+def analyze_sentiment(text):
+
+    analysis = TextBlob(text)
+    polarity = analysis.sentiment.polarity
+
+    if polarity > 0:
+        sentiment = "Positive"
+    elif polarity < 0:
+        sentiment = "Negative"
+    else:
+        sentiment = "Neutral"
+
+    return sentiment, polarity
+
+
+
+from collections import Counter
+import re
+
+
+def detect_common_issues(reviews):
+
+    words = []
+
+    for review in reviews:
+        clean = re.findall(r'\w+', review.lower())
+        words.extend(clean)
+
+    stop_words = ["the", "is", "and", "a", "to", "of", "it", "for"]
+
+    filtered = [w for w in words if w not in stop_words]
+
+    counter = Counter(filtered)
+
+    return counter.most_common(10)
+
+
+from fpdf import FPDF
+
+
+def generate_pdf(summary, issues):
+
+    pdf = FPDF()
+    pdf.add_page()
+
+    pdf.set_font("Arial", size=14)
+    pdf.cell(200, 10, txt="Weekly Feedback Report", ln=True)
+
+    pdf.set_font("Arial", size=12)
+
+    pdf.cell(200, 10, txt=f"Total Reviews: {summary['total']}", ln=True)
+    pdf.cell(200, 10, txt=f"Positive: {summary['positive']}", ln=True)
+    pdf.cell(200, 10, txt=f"Negative: {summary['negative']}", ln=True)
+
+    pdf.cell(200, 10, txt="Top Issues:", ln=True)
+
+    for issue, count in issues:
+        pdf.cell(200, 10, txt=f"{issue}: {count}", ln=True)
+
+    pdf.output("weekly_report.pdf")
