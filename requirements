@@ -1,0 +1,8 @@
+google-play-scraper
+pandas
+textblob
+streamlit
+matplotlib
+fpdf
+
+pip install -r requirements.txt
