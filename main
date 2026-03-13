@@ -1,0 +1,44 @@
+import pandas as pd
+from fetch_reviews import fetch_google_play_reviews, load_csv_reviews
+from sentiment_analysis import analyze_sentiment
+from issue_detection import detect_common_issues
+from report_generator import generate_pdf
+
+
+def main():
+
+    app_id = "com.whatsapp"
+
+    play_reviews = fetch_google_play_reviews(app_id)
+    survey_reviews = load_csv_reviews("sample_surveys.csv")
+
+    data = pd.concat([play_reviews, survey_reviews])
+
+    sentiments = []
+    scores = []
+
+    for review in data["review"]:
+        sentiment, polarity = analyze_sentiment(review)
+        sentiments.append(sentiment)
+        scores.append(polarity)
+
+    data["sentiment"] = sentiments
+    data["score"] = scores
+
+    issues = detect_common_issues(data["review"])
+
+    summary = {
+        "total": len(data),
+        "positive": len(data[data["sentiment"] == "Positive"]),
+        "negative": len(data[data["sentiment"] == "Negative"])
+    }
+
+    generate_pdf(summary, issues)
+
+    print("Analysis Complete!")
+    print(summary)
+    print("Top Issues:", issues)
+
+
+if __name__ == "__main__":
+    main()
