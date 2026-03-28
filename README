@@ -1,0 +1,19 @@
+│
+├── data/
+│ └── sample_surveys.csv
+│
+├── src/
+│ ├── fetch_reviews.py
+│ ├── sentiment_analysis.py
+│ ├── issue_detection.py
+│ ├── report_generator.py
+│
+├── dashboard/
+│ └── dashboard.py
+│
+├── outputs/
+│ └── weekly_report.pdf
+│
+├── main.py
+├── requirements.txt
+└── README.md
