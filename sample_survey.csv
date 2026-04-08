@@ -1,0 +1,13 @@
+feedback_text,rating,date,username
+"The new update is absolutely terrible. It keeps crashing when I try to open a message.",1,2023-10-01,userAlpha
+"Love the dark mode! Much easier on the eyes.",5,2023-10-02,userBeta
+"App is okay, but it frequently disconnects from the server.",2,2023-10-03,userGamma
+"Please add a way to schedule messages, it's my most requested feature.",4,2023-10-04,userDelta
+"Crashes immediately on startup after the iOS update.",1,2023-10-05,userEpsilon
+"Best app ever. Works flawlessly.",5,2023-10-06,userZeta
+"The UI is a bit confusing to navigate.",3,2023-10-07,userEta
+"Notifications are delayed by 10 minutes. Fix this bug!",1,2023-10-08,userTheta
+"Great experience, customer support was very helpful.",5,2023-10-09,userIota
+"It freezes when I upload a large photo.",2,2023-10-10,userKappa
+"Not bad, but could use some performance optimizations.",3,2023-10-11,userLambda
+"Stop asking me to rate the app every time I open it!",1,2023-10-12,userMu

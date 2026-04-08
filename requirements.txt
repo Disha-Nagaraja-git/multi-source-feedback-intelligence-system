@@ -1,0 +1,10 @@
+streamlit
+pandas
+google-play-scraper
+feedparser
+textblob
+nltk
+scikit-learn
+matplotlib
+plotly
+fpdf
